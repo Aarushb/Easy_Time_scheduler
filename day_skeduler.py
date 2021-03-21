@@ -41,15 +41,13 @@ if time_selection ==1:
             engine = pyttsx3.init()
             engine = pyttsx3.init()
             engine.say("it is time for " + n)
-            engine.say("it is time for " + n)
-            engine.say("it is time for " + n)
             engine.runAndWait()
             print("it is time for " + n)
             return schedule.CancelJob
             
         
-        schedule.every().day.at("8:00").do(job,n=task1)
-        schedule.every().day.at("9:00").do(job,n=task2)
+        schedule.every().day.at("08:00").do(job,n=task1)
+        schedule.every().day.at("09:00").do(job,n=task2)
         schedule.every().day.at("10:00").do(job,n=task3)
         schedule.every().day.at("11:00").do(job,n=task4)
         schedule.every().day.at("12:00").do(job,n=task5)
@@ -58,7 +56,7 @@ if time_selection ==1:
         schedule.every().day.at("15:00").do(job,n=task7)
         schedule.every().day.at("16:00").do(job,n=task8)
         schedule.every().day.at("17:00").do(job,n="Break/Rest/Play")
-
+        schedule.every().day.at("19:03").do(job,n="hi!")
         while 1:
             n = schedule.idle_seconds()
             if n is None:
@@ -81,16 +79,13 @@ if time_selection ==1:
 
         def job(n):
             engine = pyttsx3.init()
-            engine = pyttsx3.init()
-            engine.say("it is time for " + n)
-            engine.say("it is time for " + n)
             engine.say("it is time for " + n)
             engine.runAndWait()
             print("it is time for " + n)
             return schedule.CancelJob
             
         
-        schedule.every().day.at("8:00").do(job,n=task1)
+        schedule.every().day.at("08:00").do(job,n=task1)
         schedule.every().day.at("10:00").do(job,n=task2)
         schedule.every().day.at("12:00").do(job,n=task3)
         schedule.every().day.at("13:00").do(job,n="Lunch")
@@ -127,15 +122,13 @@ elif time_selection ==2:
             engine = pyttsx3.init()
             engine = pyttsx3.init()
             engine.say("it is time for " + n)
-            engine.say("it is time for " + n)
-            engine.say("it is time for " + n)
             engine.runAndWait()
             print("it is time for " + n)
             return schedule.CancelJob
             
         
         
-        schedule.every().day.at("9:00").do(job,n=task1)
+        schedule.every().day.at("09:00").do(job,n=task1)
         schedule.every().day.at("10:00").do(job,n=task2)
         schedule.every().day.at("11:00").do(job,n=task3)
         schedule.every().day.at("12:00").do(job,n=task4)
@@ -168,14 +161,12 @@ elif time_selection ==2:
             engine = pyttsx3.init()
             engine = pyttsx3.init()
             engine.say("it is time for " + n)
-            engine.say("it is time for " + n)
-            engine.say("it is time for " + n)
             engine.runAndWait()
             print("it is time for " + n)
             return schedule.CancelJob
             
         
-        schedule.every().day.at("9:00").do(job,n=task1)
+        schedule.every().day.at("09:00").do(job,n=task1)
         schedule.every().day.at("11:00").do(job,n=task2)
         schedule.every().day.at("13:00").do(job,n="Lunch")
         schedule.every().day.at("14:00").do(job,n=task3)
