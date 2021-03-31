@@ -1,191 +1,88 @@
-#Here is where the code for the generic day schoduler goes, as mentioned in the spec docs. Feel free to remove this comment once you begin coding and add your own along the way.
-#install two libraries 
-# first one pyttsx3 in cmd type"pip install pyttsx3"
-# second one schedule in cmd type" pip install schedule"
+import pyttsx3, schedule,time, mainmenu, sys,keyboard #these are all the complete libs we need for this  program
+from win10toast import ToastNotifier#we need this for the notifications for tasks
+#The function we will need down the road in order to output the tasks in sapi.
+def job(n):
+	engine = pyttsx3.init()
+	engine.say("it is time for " + n)
+	engine.runAndWait()
+	print("it is time for " + n)
+	toaster = ToastNotifier()
+	toaster.show_toast("Its time for "+n,"Get to it!",
+	duration=10)
+	return schedule.CancelJob
+#function for the main interface of our day schoduler
+tasklist=[]
 
-# Currently code run for 8 am to 5 pm duration of 1 hour
-# Currently code run for 8 am to 5 pm duration of 2 hours
-# Currently code run for 9 am to 6 pm duration of 1 hour
-# Currently code run for 9 am to 6 pm duration of 2 hours
+def day_scheduler():
+	#Presenting a menu to the user, this will be ported to gui soon if everything goes as per plan.
+	count=1#we need this later on for the menus in the delete menu
+	#Validating user's input.
+	while True:
+		while True:
+			try:
+				print("Please choose an option from the following menu. \n 1. Add a task. \n 2. View current list of tasks. \n 3. delete a task. \n 4. Start my day.\n 5. Return to the main menu. \n 6. Exit.")
+				option=int(input("Please choose an option."))
+			except:
+				print("Invalid input! Please enter a number.")
+				continue
+			if option in range(1,7):
+				break
+			else:
+				print("Please pick a valid number from the given menu")
+				continue
 
-
-# import libraries pyttsx3, schedule, and time
-import pyttsx3
-import schedule
-import time
-
-
-
-
-#--------------------------------------------------------------------------------------------------
-print("WELCOME TO DAY SCHEDULER")
-
-time_selection=int(input("Select the start time and end time, if 8 am to 5 pm choose '1' and 9 am  to 6 pm choose '2': "))
-time_duration=int(input("Enter duration of time, if duration is one hour choose '1' and if duration is two hours choose '2': "))
-
-#----------------------------------------------------------------------------------------------------------
-
-if time_selection ==1: 
-    if time_duration==1:
-        task1=input("Enter the first task from 8am to 9am: ")
-        task2=input("Enter the second task from 9am to 10am: ")
-        task3=input("Enter the third task from 10am to 11am: ")
-        task4=input("Enter the fourth task from 11am to 12pm: ")
-        task5=input("Enter the fifth task from 12pm to 1pm: ")
-        print("1pm to 2pm is lunch time")
-        task6=input("Enter the sixth task from 2pm to 3pm: ")
-        task7=input("Enter the seventh task from 3pm to 4pm: ")
-        task8=input("Enter the eightth task from 4pm to 5pm: ")
-
-        def job(n):
-            engine = pyttsx3.init()
-            engine = pyttsx3.init()
-            engine.say("it is time for " + n)
-            engine.runAndWait()
-            print("it is time for " + n)
-            return schedule.CancelJob
-            
-        
-        schedule.every().day.at("08:00").do(job,n=task1)
-        schedule.every().day.at("09:00").do(job,n=task2)
-        schedule.every().day.at("10:00").do(job,n=task3)
-        schedule.every().day.at("11:00").do(job,n=task4)
-        schedule.every().day.at("12:00").do(job,n=task5)
-        schedule.every().day.at("13:00").do(job,n="Lunch")
-        schedule.every().day.at("14:00").do(job,n=task6)
-        schedule.every().day.at("15:00").do(job,n=task7)
-        schedule.every().day.at("16:00").do(job,n=task8)
-        schedule.every().day.at("17:00").do(job,n="Break/Rest/Play")
-        schedule.every().day.at("19:03").do(job,n="hi!")
-        while 1:
-            n = schedule.idle_seconds()
-            if n is None:
-                # no more jobs
-                break
-            elif n > 0:
-                # sleep exactly the right amount of time
-                time.sleep(n)
-            schedule.run_pending()
-
-
-
-    elif time_duration==2:
-        task1=input("Enter the first task from 8am to 10am: ")
-        task2=input("Enter the second task from 10am to 12pm: ")
-        task3=input("Enter the third task from 12pm to 3pm: ")
-        print("1pm to 2pm will be lunch break")
-        task4=input("Enter the fourth task from 3pm to 5pm: ")
-
-
-        def job(n):
-            engine = pyttsx3.init()
-            engine.say("it is time for " + n)
-            engine.runAndWait()
-            print("it is time for " + n)
-            return schedule.CancelJob
-            
-        
-        schedule.every().day.at("08:00").do(job,n=task1)
-        schedule.every().day.at("10:00").do(job,n=task2)
-        schedule.every().day.at("12:00").do(job,n=task3)
-        schedule.every().day.at("13:00").do(job,n="Lunch")
-        schedule.every().day.at("14:00").do(job,n=task3)
-        schedule.every().day.at("15:00").do(job,n=task4)
-        schedule.every().day.at("17:00").do(job,n="Break/Rest/Play")
-        
-
-        while 1:
-            n = schedule.idle_seconds()
-            if n is None:
-                # no more jobs
-                break
-            elif n > 0:
-                # sleep exactly the right amount of time
-                time.sleep(n)
-            schedule.run_pending()
-
-
-elif time_selection ==2: 
-    if time_duration==1:
-        
-        task1=input("Enter the first task from 9am to 10am: ")
-        task2=input("Enter the second task from 10am to 11am: ")
-        task3=input("Enter the third task from 11am to 12pm: ")
-        task4=input("Enter the fourth task from 12pm to 1pm: ")
-        print("1pm to 2pm is lunch time")
-        task5=input("Enter the fifth task from 2pm to 3pm: ")
-        task6=input("Enter the sixth task from 3pm to 4pm: ")
-        task7=input("Enter the seventh task from 4pm to 5pm: ")
-        task8=input("Enter the eightth task from 5pm to 6pm: ")
-
-        def job(n):
-            engine = pyttsx3.init()
-            engine = pyttsx3.init()
-            engine.say("it is time for " + n)
-            engine.runAndWait()
-            print("it is time for " + n)
-            return schedule.CancelJob
-            
-        
-        
-        schedule.every().day.at("09:00").do(job,n=task1)
-        schedule.every().day.at("10:00").do(job,n=task2)
-        schedule.every().day.at("11:00").do(job,n=task3)
-        schedule.every().day.at("12:00").do(job,n=task4)
-        schedule.every().day.at("13:00").do(job,n="Lunch")
-        schedule.every().day.at("14:00").do(job,n=task5)
-        schedule.every().day.at("15:00").do(job,n=task6)
-        schedule.every().day.at("16:00").do(job,n=task7)
-        schedule.every().day.at("17:00").do(job,n=task8)
-        schedule.every().day.at("18:00").do(job,n="Break/Rest/Play")
-
-        while 1:
-            n = schedule.idle_seconds()
-            if n is None:
-                # no more jobs
-                break
-            elif n > 0:
-                # sleep exactly the right amount of time
-                time.sleep(n)
-            schedule.run_pending()
-
-
-    elif time_duration==2:
-        task1=input("Enter the first task from 9am to 11am: ")
-        task2=input("Enter the second task from 11am to 1pm: ")
-        print("1pm to 2pm will be lunch break")
-        task3=input("Enter the third task from 2pm to 4pm: ")
-        task4=input("Enter the fourth task from 4pm to 6pm: ")
-
-        def job(n):
-            engine = pyttsx3.init()
-            engine = pyttsx3.init()
-            engine.say("it is time for " + n)
-            engine.runAndWait()
-            print("it is time for " + n)
-            return schedule.CancelJob
-            
-        
-        schedule.every().day.at("09:00").do(job,n=task1)
-        schedule.every().day.at("11:00").do(job,n=task2)
-        schedule.every().day.at("13:00").do(job,n="Lunch")
-        schedule.every().day.at("14:00").do(job,n=task3)
-        schedule.every().day.at("16:00").do(job,n=task4)
-        schedule.every().day.at("18:00").do(job,n="Break/Rest/Play")
-        
-
-        while 1:
-            n = schedule.idle_seconds()
-            if n is None:
-                # no more jobs
-                break
-            elif n > 0:
-                # sleep exactly the right amount of time
-                time.sleep(n)
-            schedule.run_pending()
-
-
-else:
-    print("Invalid input")
-
-
+		#Actually coding these options in now.
+		if option==2:
+			if len(tasklist)==0:
+				print("There are 0 tasks skeduled right now.")
+				continue
+			else:
+				print("There are currently ",len(tasklist),"tasks skeduled which are as follows.",tasklist)
+				continue
+		elif option==1:
+			taskname=input("Enter a name for your new task.")
+			while True:
+				tasktime=input("Enter the time at which you want to start this task. Your input should be in the form of hh:min. For example, 08:30 for 8 30 in the morning.")
+				if int(tasktime[0:tasktime.index(":")]) in range(0,24) and int(tasktime[tasktime.index(":")+1:]) in range(0,61):
+					break
+				else:
+					print("Invalid input of time spicified. Please try again.")
+					continue
+			tasklist.append(taskname+ ",at"+ tasktime)
+			schedule.every().day.at(tasktime).do(job,n=taskname)
+			print("All done! You will be notified when the task has to be done.")
+			continue
+		elif option==4:
+			print("Starting your day, now!")
+			task_notifier()
+		elif option==6:
+			print("Exiting.")
+			time.sleep(1)
+			sys.exit()
+		elif option==3:
+			print("Choose the task to be deleted from the following menu.")
+			while True:
+				for i in tasklist:
+					print(count,i)
+					count+=1
+				try:
+					taskdel=int(input("Choose a task."))
+				except:
+					print("Please enter a number.")
+					continue
+				if taskdel not in range(1,len(tasklist)+1):
+					print("Invalid option.  Please try again.")
+					continue
+				tasktodel=tasklist[taskdel-1]
+				tasklist.remove(tasktodel)
+				tasktodel=tasktodel[0:tasktodel.index(",")]
+				schedule.cancel_job(tasktodel)
+				print("Deleted successfully!")
+				break
+		elif option==5:
+			mainmenu.mainmenu()
+def task_notifier():
+	while True:
+		schedule.run_pending()
+		if keyboard.is_pressed("esc"):
+			day_scheduler()
